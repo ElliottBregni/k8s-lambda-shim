@@ -1,0 +1,29 @@
+[project]
+name = "k8s-lambda-shim"
+version = "0.1.0"
+description = "K8s shim for AWS Lambda event dispatching"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "httpx>=0.27.0",
+    "kubernetes>=31.0.0",
+    "boto3>=1.35.0",
+    "click>=8.1.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.7.0",
+]
+
+[project.scripts]
+k8s-shim = "shim.cli:cli"
+
+[build-system]
+requires = ["setuptools>=75.0.0"]
+build-backend = "setuptools.build_meta"

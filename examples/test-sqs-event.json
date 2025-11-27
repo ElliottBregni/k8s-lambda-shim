@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "messageId": "msg-001",
+      "body": {
+        "shipment_number": "SH-2025-001",
+        "carrier": "FEDEX",
+        "ship_to_address": "123 Factory St, Detroit, MI",
+        "delivery_date": "2025-11-28",
+        "items": [
+          {
+            "part_number": "BRK-1234-A",
+            "quantity": 100,
+            "description": "Brake Pad Assembly"
+          }
+        ]
+      }
+    }
+  ]
+}

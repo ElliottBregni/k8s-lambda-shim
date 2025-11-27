@@ -1,0 +1,66 @@
+# K8s Lambda Shim Configuration
+# Maps Lambda function names to K8s service endpoints
+
+services:
+  - name: asn-processor
+    namespace: freightverify
+    service_name: asn-processor-service
+    port: 8080
+    path: /process
+  
+  - name: parts-validator
+    namespace: freightverify
+    service_name: parts-validator-service
+    port: 8080
+    path: /validate
+  
+  - name: inventory-updater
+    namespace: freightverify
+    service_name: inventory-service
+    port: 8080
+    path: /update
+  
+  - name: shipment-tracker
+    namespace: freightverify
+    service_name: tracking-service
+    port: 8080
+    path: /track
+
+# Middleware configuration
+middleware:
+  logging:
+    enabled: true
+    level: INFO
+  
+  validation:
+    enabled: true
+  
+  asn_validation:
+    enabled: true
+    required_fields:
+      - shipment_number
+      - carrier
+      - ship_to_address
+      - delivery_date
+      - items
+  
+  batch_processing:
+    enabled: true
+    batch_size: 50
+  
+  auth:
+    enabled: true
+    api_keys:
+      - "partview-webhook-key"
+      - "internal-service-key"
+
+# Server configuration
+server:
+  host: 0.0.0.0
+  port: 8000
+  timeout: 30
+
+# Logging
+logging:
+  level: INFO
+  format: json
