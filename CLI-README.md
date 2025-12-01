@@ -2,7 +2,7 @@
 
 Enhanced Python package with CLI tools for managing and running the K8s Lambda Shim.
 
-## 🚀 Installation
+## Installation
 
 ```bash
 # Install in development mode
@@ -13,7 +13,7 @@ pip install -e .
 pip install -e ".[dev]"
 ```
 
-## 📦 CLI Commands
+## CLI Commands
 
 After installation, the `k8s-shim` command will be available:
 
@@ -33,10 +33,10 @@ k8s-shim init config.yaml
 k8s-shim validate -c config.yaml
 
 # Output:
-# ✅ Configuration is valid
-# 📋 Services configured: 4
-#   - asn-processor → freightverify/asn-processor-service:8080
-#   - parts-validator → freightverify/parts-validator-service:8080
+# Configuration is valid
+# Services configured: 4
+# - asn-processor → freightverify/asn-processor-service:8080
+# - parts-validator → freightverify/parts-validator-service:8080
 ```
 
 ### Start Server
@@ -72,13 +72,13 @@ k8s-shim invoke -c config.yaml -t eventbridge -f shipment-tracker -p event.json
 k8s-shim list-services -n freightverify
 
 # Output:
-# 📦 Services in namespace 'freightverify':
-#   asn-processor-service
-#     Type: ClusterIP
-#     Ports: 8080/TCP
+# Services in namespace 'freightverify':
+# asn-processor-service
+# Type: ClusterIP
+# Ports: 8080/TCP
 ```
 
-## 🌐 Server API Endpoints
+## Server API Endpoints
 
 When running the server, the following endpoints are available:
 
@@ -90,26 +90,26 @@ curl http://localhost:8000/health
 ### Invoke by Function Name
 ```bash
 curl -X POST http://localhost:8000/invoke/asn-processor \
-  -H "Content-Type: application/json" \
-  -d @examples/test-sqs-event.json
+ -H "Content-Type: application/json" \
+ -d @examples/test-sqs-event.json
 ```
 
 ### Event-Specific Endpoints
 ```bash
 # SQS events
 curl -X POST http://localhost:8000/sqs/asn-processor \
-  -H "Content-Type: application/json" \
-  -d @sqs-event.json
+ -H "Content-Type: application/json" \
+ -d @sqs-event.json
 
 # EventBridge events
 curl -X POST http://localhost:8000/eventbridge/asn-processor \
-  -H "Content-Type: application/json" \
-  -d @eventbridge-event.json
+ -H "Content-Type: application/json" \
+ -d @eventbridge-event.json
 
 # API Gateway events
 curl -X POST http://localhost:8000/api-gateway/parts-validator \
-  -H "Content-Type: application/json" \
-  -d @api-gateway-event.json
+ -H "Content-Type: application/json" \
+ -d @api-gateway-event.json
 ```
 
 ### List Registered Services
@@ -117,32 +117,32 @@ curl -X POST http://localhost:8000/api-gateway/parts-validator \
 curl http://localhost:8000/services
 ```
 
-## 📝 Configuration Format
+## Configuration Format
 
 ### YAML Structure
 
 ```yaml
 services:
-  - name: asn-processor
-    namespace: freightverify
-    service_name: asn-processor-service
-    port: 8080
-    path: /process
+ - name: asn-processor
+ namespace: freightverify
+ service_name: asn-processor-service
+ port: 8080
+ path: /process
 
 middleware:
-  logging:
-    enabled: true
-    level: INFO
-  validation:
-    enabled: true
+ logging:
+ enabled: true
+ level: INFO
+ validation:
+ enabled: true
 
 server:
-  host: 0.0.0.0
-  port: 8000
-  timeout: 30
+ host: 0.0.0.0
+ port: 8000
+ timeout: 30
 ```
 
-## 🔧 Usage Examples
+## Usage Examples
 
 ### Example 1: Development Testing
 
@@ -176,27 +176,27 @@ k8s-shim serve -c /etc/k8s-shim/prod-config.yaml --host 0.0.0.0 --port 8000
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lambda-shim
+ name: lambda-shim
 spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-      - name: shim
-        image: your-registry/k8s-lambda-shim:latest
-        command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
-        ports:
-        - containerPort: 8000
-        volumeMounts:
-        - name: config
-          mountPath: /config
-      volumes:
-      - name: config
-        configMap:
-          name: lambda-shim-config
+ replicas: 3
+ template:
+ spec:
+ containers:
+ - name: shim
+ image: your-registry/k8s-lambda-shim:latest
+ command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
+ ports:
+ - containerPort: 8000
+ volumeMounts:
+ - name: config
+ mountPath: /config
+ volumes:
+ - name: config
+ configMap:
+ name: lambda-shim-config
 ```
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run tests
@@ -209,7 +209,7 @@ pytest --cov=shim tests/
 pytest tests/test_cli.py -v
 ```
 
-## 🐳 Docker Usage
+## Docker Usage
 
 ```bash
 # Build image
@@ -217,21 +217,21 @@ docker build -t k8s-lambda-shim .
 
 # Run container
 docker run -p 8000:8000 -v $(pwd)/config.yaml:/config/config.yaml \
-  k8s-lambda-shim serve -c /config/config.yaml
+ k8s-lambda-shim serve -c /config/config.yaml
 ```
 
-## 📚 Common Workflows
+## Common Workflows
 
 ### Adding a New Service
 
 1. Add to config.yaml:
 ```yaml
 services:
-  - name: new-function
-    namespace: default
-    service_name: new-service
-    port: 8080
-    path: /handler
+ - name: new-function
+ namespace: default
+ service_name: new-service
+ port: 8080
+ path: /handler
 ```
 
 2. Validate:
@@ -254,7 +254,7 @@ curl http://localhost:8000/services
 k8s-shim invoke -c config.yaml -t direct -f my-function -p test.json
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 **Service not found error:**
 ```bash
@@ -270,6 +270,6 @@ k8s-shim validate -c config.yaml
 - Check service is running: `kubectl get svc -n namespace`
 - Verify network policies allow traffic
 
-## 📄 License
+## License
 
 MIT

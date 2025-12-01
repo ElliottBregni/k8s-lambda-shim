@@ -1,10 +1,10 @@
 # K8s Lambda Shim - Python Package Summary
 
-## 🎉 What Was Created
+## What Was Created
 
 A complete, production-ready Python package with CLI tools for running and managing your K8s Lambda Shim.
 
-## 📦 Package Components
+## Package Components
 
 ### 1. CLI Tool (`src/shim/cli.py`)
 Command-line interface with 5 main commands:
@@ -38,7 +38,7 @@ Container image with:
 - `examples/config.yaml` - Production-ready config
 - `examples/test-sqs-event.json` - Sample test payload
 
-## 🚀 Installation & Usage
+## Installation & Usage
 
 ### Install Package
 ```bash
@@ -62,37 +62,37 @@ k8s-shim serve -c my-config.yaml
 ### Test Invocation
 ```bash
 k8s-shim invoke -c examples/config.yaml \
-  -t sqs \
-  -f asn-processor \
-  -p examples/test-sqs-event.json
+ -t sqs \
+ -f asn-processor \
+ -p examples/test-sqs-event.json
 ```
 
-## 🌟 Key Features
+## Key Features
 
 ### CLI Features
-✅ Configuration generation with sensible defaults
-✅ Configuration validation with detailed error messages
-✅ Local testing without deploying
-✅ K8s service discovery
-✅ Verbose logging mode
-✅ Multiple event type support
+ Configuration generation with sensible defaults
+ Configuration validation with detailed error messages
+ Local testing without deploying
+ K8s service discovery
+ Verbose logging mode
+ Multiple event type support
 
 ### Server Features
-✅ Auto-detection of event types
-✅ RESTful API endpoints
-✅ Health checks for K8s
-✅ Service registry management
-✅ Middleware chain execution
-✅ JSON error responses
+ Auto-detection of event types
+ RESTful API endpoints
+ Health checks for K8s
+ Service registry management
+ Middleware chain execution
+ JSON error responses
 
 ### DevOps Features
-✅ Docker containerization
-✅ Health check endpoints
-✅ Configurable via YAML
-✅ Volume-mounted configs
-✅ Production-ready logging
+ Docker containerization
+ Health check endpoints
+ Configurable via YAML
+ Volume-mounted configs
+ Production-ready logging
 
-## 📋 Available Commands
+## Available Commands
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -102,7 +102,7 @@ k8s-shim invoke -c examples/config.yaml \
 | `invoke` | Test function | `k8s-shim invoke -c config.yaml -t sqs -f my-func -p event.json` |
 | `list-services` | List K8s services | `k8s-shim list-services -n default` |
 
-## 🌐 API Endpoints
+## API Endpoints
 
 When server is running (default: http://localhost:8000):
 
@@ -115,7 +115,7 @@ When server is running (default: http://localhost:8000):
 | `/eventbridge/{function}` | POST | Handle EventBridge events |
 | `/api-gateway/{function}` | POST | Handle API Gateway events |
 
-## 🐳 Docker Usage
+## Docker Usage
 
 ### Build Image
 ```bash
@@ -125,8 +125,8 @@ docker build -t k8s-lambda-shim .
 ### Run Container
 ```bash
 docker run -p 8000:8000 \
-  -v $(pwd)/examples/config.yaml:/config/config.yaml \
-  k8s-lambda-shim
+ -v $(pwd)/examples/config.yaml:/config/config.yaml \
+ k8s-lambda-shim
 ```
 
 ### Kubernetes Deployment
@@ -134,33 +134,33 @@ docker run -p 8000:8000 \
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lambda-shim
+ name: lambda-shim
 spec:
-  replicas: 3
-  template:
-    spec:
-      containers:
-      - name: shim
-        image: k8s-lambda-shim:latest
-        command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
-        ports:
-        - containerPort: 8000
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        volumeMounts:
-        - name: config
-          mountPath: /config
-      volumes:
-      - name: config
-        configMap:
-          name: lambda-shim-config
+ replicas: 3
+ template:
+ spec:
+ containers:
+ - name: shim
+ image: k8s-lambda-shim:latest
+ command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
+ ports:
+ - containerPort: 8000
+ livenessProbe:
+ httpGet:
+ path: /health
+ port: 8000
+ initialDelaySeconds: 5
+ periodSeconds: 10
+ volumeMounts:
+ - name: config
+ mountPath: /config
+ volumes:
+ - name: config
+ configMap:
+ name: lambda-shim-config
 ```
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Development
 ```bash
@@ -178,8 +178,8 @@ k8s-shim serve -c config.yaml
 
 # Send test events
 curl -X POST http://localhost:8000/sqs/asn-processor \
-  -H "Content-Type: application/json" \
-  -d @test-event.json
+ -H "Content-Type: application/json" \
+ -d @test-event.json
 ```
 
 ### Production
@@ -189,41 +189,41 @@ k8s-shim serve -c /etc/k8s-shim/prod-config.yaml --host 0.0.0.0
 
 # Or use Docker
 docker run -d -p 8000:8000 \
-  -v /etc/k8s-shim/config.yaml:/config/config.yaml \
-  --name lambda-shim \
-  k8s-lambda-shim
+ -v /etc/k8s-shim/config.yaml:/config/config.yaml \
+ --name lambda-shim \
+ k8s-lambda-shim
 ```
 
-## 📝 Configuration Example
+## Configuration Example
 
 ```yaml
 services:
-  - name: asn-processor
-    namespace: freightverify
-    service_name: asn-processor-service
-    port: 8080
-    path: /process
-  
-  - name: parts-validator
-    namespace: freightverify
-    service_name: parts-validator-service
-    port: 8080
-    path: /validate
+ - name: asn-processor
+ namespace: freightverify
+ service_name: asn-processor-service
+ port: 8080
+ path: /process
+
+ - name: parts-validator
+ namespace: freightverify
+ service_name: parts-validator-service
+ port: 8080
+ path: /validate
 
 middleware:
-  logging:
-    enabled: true
-    level: INFO
-  validation:
-    enabled: true
+ logging:
+ enabled: true
+ level: INFO
+ validation:
+ enabled: true
 
 server:
-  host: 0.0.0.0
-  port: 8000
-  timeout: 30
+ host: 0.0.0.0
+ port: 8000
+ timeout: 30
 ```
 
-## 🔧 Development
+## Development
 
 ```bash
 # Install with dev dependencies
@@ -239,7 +239,7 @@ ruff check src/
 ruff format src/
 ```
 
-## 📚 Next Steps
+## Next Steps
 
 1. **Customize Configuration**: Edit `examples/config.yaml` with your services
 2. **Add Middleware**: Extend with custom middleware for your use case
@@ -247,7 +247,7 @@ ruff format src/
 4. **Monitor**: Use health endpoints for monitoring/alerting
 5. **Scale**: Run multiple replicas behind a load balancer
 
-## ✅ Package is Ready!
+## Package is Ready!
 
 The package is fully functional and ready to use. Run `k8s-shim --help` to get started!
 

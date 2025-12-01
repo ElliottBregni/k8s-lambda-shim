@@ -1,4 +1,4 @@
-# K8s Lambda Shim 🚀
+# K8s Lambda Shim
 
 [![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -10,58 +10,58 @@ Transform your Lambda-heavy AWS architecture into a streamlined K8s-native solut
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎯 **Multi-source event handling**: API Gateway, EventBridge, SQS, Direct Invoke
-- 📦 **Service Registry**: Maps Lambda function names to K8s service endpoints
-- 🔗 **Middleware Chain**: Auth, logging, validation (fully extensible)
-- 🛡️ **Type-safe**: Full Pydantic models and type hints
-- ⚡ **CLI Tool**: Easy management and testing with `k8s-shim` command
-- 🌐 **REST API**: Production-ready HTTP server
-- 🐳 **Docker Ready**: Container image with health checks
-- 📊 **Observable**: Built-in logging and health endpoints
+- **Multi-source event handling**: API Gateway, EventBridge, SQS, Direct Invoke
+- **Service Registry**: Maps Lambda function names to K8s service endpoints
+- **Middleware Chain**: Auth, logging, validation (fully extensible)
+- ️ **Type-safe**: Full Pydantic models and type hints
+- **CLI Tool**: Easy management and testing with `k8s-shim` command
+- **REST API**: Production-ready HTTP server
+- **Docker Ready**: Container image with health checks
+- **Observable**: Built-in logging and health endpoints
 
-## 🏗️ Architecture
+## ️ Architecture
 
 ```
 ┌─────────────────┐
-│  AWS Event      │
-│  Sources        │
-│  • SQS          │
-│  • EventBridge  │
-│  • API Gateway  │
-│  • Direct       │
+│ AWS Event │
+│ Sources │
+│ • SQS │
+│ • EventBridge │
+│ • API Gateway │
+│ • Direct │
 └────────┬────────┘
-         │
-         ▼
+ │
+ ▼
 ┌─────────────────┐
-│  Event          │
-│  Dispatcher     │
+│ Event │
+│ Dispatcher │
 └────────┬────────┘
-         │
-         ▼
+ │
+ ▼
 ┌─────────────────┐
-│  Middleware     │
-│  Chain          │
-│  • Logging      │
-│  • Validation   │
-│  • Auth         │
+│ Middleware │
+│ Chain │
+│ • Logging │
+│ • Validation │
+│ • Auth │
 └────────┬────────┘
-         │
-         ▼
+ │
+ ▼
 ┌─────────────────┐
-│  Service        │
-│  Registry       │
+│ Service │
+│ Registry │
 └────────┬────────┘
-         │
-         ▼
+ │
+ ▼
 ┌─────────────────┐
-│  Kubernetes     │
-│  Service        │
+│ Kubernetes │
+│ Service │
 └─────────────────┘
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -94,7 +94,7 @@ k8s-shim serve -c config.yaml
 
 **Server will be running at:** `http://localhost:8000`
 
-## 📦 CLI Commands
+## CLI Commands
 
 | Command | Description | Example |
 |---------|-------------|---------|
@@ -106,7 +106,7 @@ k8s-shim serve -c config.yaml
 
 **See [CLI-README.md](CLI-README.md) for detailed CLI documentation.**
 
-## 🌐 API Endpoints
+## API Endpoints
 
 Once the server is running:
 
@@ -130,39 +130,39 @@ curl http://localhost:8000/services
 
 # Invoke function with SQS event
 curl -X POST http://localhost:8000/sqs/asn-processor \
-  -H "Content-Type: application/json" \
-  -d @examples/test-sqs-event.json
+ -H "Content-Type: application/json" \
+ -d @examples/test-sqs-event.json
 ```
 
-## ⚙️ Configuration
+## ️ Configuration
 
 ### YAML Configuration
 
 ```yaml
 services:
-  - name: asn-processor
-    namespace: freightverify
-    service_name: asn-processor-service
-    port: 8080
-    path: /process
-  
-  - name: parts-validator
-    namespace: freightverify
-    service_name: parts-validator-service
-    port: 8080
-    path: /validate
+ - name: asn-processor
+ namespace: freightverify
+ service_name: asn-processor-service
+ port: 8080
+ path: /process
+
+ - name: parts-validator
+ namespace: freightverify
+ service_name: parts-validator-service
+ port: 8080
+ path: /validate
 
 middleware:
-  logging:
-    enabled: true
-    level: INFO
-  validation:
-    enabled: true
+ logging:
+ enabled: true
+ level: INFO
+ validation:
+ enabled: true
 
 server:
-  host: 0.0.0.0
-  port: 8000
-  timeout: 30
+ host: 0.0.0.0
+ port: 8000
+ timeout: 30
 ```
 
 ### Python Configuration
@@ -172,14 +172,14 @@ from shim.registry.service_registry import ServiceRegistry, ServiceEndpoint
 
 registry = ServiceRegistry()
 registry.register("my-function", ServiceEndpoint(
-    namespace="default",
-    service_name="my-service",
-    port=8080,
-    path="/invoke"
+ namespace="default",
+ service_name="my-service",
+ port=8080,
+ path="/invoke"
 ))
 ```
 
-## 🐳 Docker Usage
+## Docker Usage
 
 ### Build Image
 
@@ -191,8 +191,8 @@ docker build -t k8s-lambda-shim .
 
 ```bash
 docker run -p 8000:8000 \
-  -v $(pwd)/config.yaml:/config/config.yaml \
-  k8s-lambda-shim
+ -v $(pwd)/config.yaml:/config/config.yaml \
+ k8s-lambda-shim
 ```
 
 ### Kubernetes Deployment
@@ -201,68 +201,68 @@ docker run -p 8000:8000 \
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lambda-shim
-  namespace: default
+ name: lambda-shim
+ namespace: default
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: lambda-shim
-  template:
-    metadata:
-      labels:
-        app: lambda-shim
-    spec:
-      containers:
-      - name: shim
-        image: k8s-lambda-shim:latest
-        command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
-        ports:
-        - containerPort: 8000
-          name: http
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 3
-          periodSeconds: 5
-        volumeMounts:
-        - name: config
-          mountPath: /config
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-      volumes:
-      - name: config
-        configMap:
-          name: lambda-shim-config
+ replicas: 3
+ selector:
+ matchLabels:
+ app: lambda-shim
+ template:
+ metadata:
+ labels:
+ app: lambda-shim
+ spec:
+ containers:
+ - name: shim
+ image: k8s-lambda-shim:latest
+ command: ["k8s-shim", "serve", "-c", "/config/config.yaml"]
+ ports:
+ - containerPort: 8000
+ name: http
+ livenessProbe:
+ httpGet:
+ path: /health
+ port: 8000
+ initialDelaySeconds: 5
+ periodSeconds: 10
+ readinessProbe:
+ httpGet:
+ path: /health
+ port: 8000
+ initialDelaySeconds: 3
+ periodSeconds: 5
+ volumeMounts:
+ - name: config
+ mountPath: /config
+ resources:
+ requests:
+ memory: "128Mi"
+ cpu: "100m"
+ limits:
+ memory: "512Mi"
+ cpu: "500m"
+ volumes:
+ - name: config
+ configMap:
+ name: lambda-shim-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: lambda-shim
-  namespace: default
+ name: lambda-shim
+ namespace: default
 spec:
-  selector:
-    app: lambda-shim
-  ports:
-  - port: 8000
-    targetPort: 8000
-    name: http
-  type: ClusterIP
+ selector:
+ app: lambda-shim
+ ports:
+ - port: 8000
+ targetPort: 8000
+ name: http
+ type: ClusterIP
 ```
 
-## 🔧 Middleware
+## Middleware
 
 Chain middleware for cross-cutting concerns:
 
@@ -270,8 +270,8 @@ Chain middleware for cross-cutting concerns:
 from shim.middleware import MiddlewareChain, LoggingMiddleware, ValidationMiddleware
 
 chain = MiddlewareChain([
-    LoggingMiddleware(),
-    ValidationMiddleware(),
+ LoggingMiddleware(),
+ ValidationMiddleware(),
 ])
 ```
 
@@ -282,19 +282,19 @@ from shim.middleware.base import Middleware
 from shim.events.dispatcher import Event
 
 class CustomMiddleware(Middleware):
-    async def process(self, event: Event, next_handler):
-        # Pre-processing
-        print(f"Processing {event.function_name}")
-        
-        # Call next middleware
-        result = await next_handler(event)
-        
-        # Post-processing
-        print(f"Completed {event.function_name}")
-        return result
+ async def process(self, event: Event, next_handler):
+ # Pre-processing
+ print(f"Processing {event.function_name}")
+
+ # Call next middleware
+ result = await next_handler(event)
+
+ # Post-processing
+ print(f"Completed {event.function_name}")
+ return result
 ```
 
-## 📚 Examples
+## Examples
 
 See the `examples/` directory for complete examples:
 
@@ -310,12 +310,12 @@ k8s-shim serve -c examples/config.yaml
 
 # Test with sample event
 k8s-shim invoke -c examples/config.yaml \
-  -t sqs \
-  -f asn-processor \
-  -p examples/test-sqs-event.json
+ -t sqs \
+ -f asn-processor \
+ -p examples/test-sqs-event.json
 ```
 
-## 🧪 Development
+## Development
 
 ### Install Development Dependencies
 
@@ -346,14 +346,14 @@ ruff check src/
 ruff format src/
 ```
 
-## 📖 Documentation
+## Documentation
 
 - **[README.md](README.md)** - This file (main documentation)
 - **[CLI-README.md](CLI-README.md)** - Detailed CLI usage guide
 - **[QUICK-REFERENCE.md](QUICK-REFERENCE.md)** - Command cheat sheet
 - **[PACKAGE-SUMMARY.md](PACKAGE-SUMMARY.md)** - Complete package overview
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Development & Testing
 
@@ -373,10 +373,10 @@ k8s-shim serve -c /etc/k8s-shim/prod-config.yaml --host 0.0.0.0
 
 # Or use Docker
 docker run -d -p 8000:8000 \
-  -v /etc/k8s-shim/config.yaml:/config/config.yaml \
-  --name lambda-shim \
-  --restart unless-stopped \
-  k8s-lambda-shim
+ -v /etc/k8s-shim/config.yaml:/config/config.yaml \
+ --name lambda-shim \
+ --restart unless-stopped \
+ k8s-lambda-shim
 ```
 
 ### CI/CD Integration
@@ -389,15 +389,15 @@ k8s-shim validate -c config.yaml || exit 1
 kubectl apply -f k8s/deployment.yaml
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Built with:
 - [FastAPI](https://fastapi.tiangolo.com/) - Modern web framework
@@ -409,7 +409,7 @@ Built with:
 
 <div align="center">
 
-**Made with ❤️ for Kubernetes and AWS**
+**Made with ️ for Kubernetes and AWS**
 
 [Report Bug](https://github.com/ElliottBregni/k8s-lambda-shim/issues) · [Request Feature](https://github.com/ElliottBregni/k8s-lambda-shim/issues)
 

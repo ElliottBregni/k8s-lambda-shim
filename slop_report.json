@@ -1,0 +1,372 @@
+[
+  {
+    "file": "QUICK-REFERENCE.md",
+    "original_length": 3093,
+    "ai_phrases": [],
+    "emojis_removed": 8,
+    "em_dashes_removed": 0,
+    "new_length": 2995,
+    "chars_removed": 98
+  },
+  {
+    "file": "README.old.md",
+    "original_length": 3339,
+    "ai_phrases": [],
+    "emojis_removed": 6,
+    "em_dashes_removed": 0,
+    "new_length": 3278,
+    "chars_removed": 61
+  },
+  {
+    "file": "README.md",
+    "original_length": 9192,
+    "ai_phrases": [],
+    "emojis_removed": 23,
+    "em_dashes_removed": 0,
+    "new_length": 8509,
+    "chars_removed": 683
+  },
+  {
+    "file": "README-original.md",
+    "original_length": 3339,
+    "ai_phrases": [],
+    "emojis_removed": 6,
+    "em_dashes_removed": 0,
+    "new_length": 3278,
+    "chars_removed": 61
+  },
+  {
+    "file": "CLI-README.md",
+    "original_length": 5260,
+    "ai_phrases": [],
+    "emojis_removed": 12,
+    "em_dashes_removed": 0,
+    "new_length": 5078,
+    "chars_removed": 182
+  },
+  {
+    "file": "PACKAGE-SUMMARY.md",
+    "original_length": 5757,
+    "ai_phrases": [],
+    "emojis_removed": 29,
+    "em_dashes_removed": 0,
+    "new_length": 5515,
+    "chars_removed": 242
+  },
+  {
+    "file": "docs/architecture.md",
+    "original_length": 4547,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 4338,
+    "chars_removed": 209
+  },
+  {
+    "file": "docs/asn-processing.md",
+    "original_length": 5961,
+    "ai_phrases": [
+      {
+        "phrase": "best practices",
+        "count": 1
+      }
+    ],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 5497,
+    "chars_removed": 464
+  },
+  {
+    "file": "docs/api-reference.md",
+    "original_length": 6000,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 5866,
+    "chars_removed": 134
+  },
+  {
+    "file": "anti_slop.py",
+    "original_length": 6642,
+    "ai_phrases": [
+      {
+        "phrase": "delve into",
+        "count": 1
+      },
+      {
+        "phrase": "delve deeper",
+        "count": 1
+      },
+      {
+        "phrase": "delving into",
+        "count": 1
+      },
+      {
+        "phrase": "it's worth noting",
+        "count": 1
+      },
+      {
+        "phrase": "worth noting that",
+        "count": 1
+      },
+      {
+        "phrase": "in today's world",
+        "count": 1
+      },
+      {
+        "phrase": "in today's landscape",
+        "count": 1
+      },
+      {
+        "phrase": "in today's digital age",
+        "count": 1
+      },
+      {
+        "phrase": "navigate the complexities",
+        "count": 1
+      },
+      {
+        "phrase": "navigating the complexities",
+        "count": 1
+      },
+      {
+        "phrase": "at the end of the day",
+        "count": 1
+      },
+      {
+        "phrase": "it's important to note",
+        "count": 1
+      },
+      {
+        "phrase": "plays a crucial role",
+        "count": 1
+      },
+      {
+        "phrase": "robust solution",
+        "count": 1
+      },
+      {
+        "phrase": "robust framework",
+        "count": 1
+      },
+      {
+        "phrase": "holistic approach",
+        "count": 1
+      },
+      {
+        "phrase": "holistic view",
+        "count": 1
+      },
+      {
+        "phrase": "leverage",
+        "count": 1
+      },
+      {
+        "phrase": "leveraging",
+        "count": 1
+      },
+      {
+        "phrase": "synergy",
+        "count": 1
+      },
+      {
+        "phrase": "synergistic",
+        "count": 1
+      },
+      {
+        "phrase": "paradigm shift",
+        "count": 1
+      },
+      {
+        "phrase": "game changer",
+        "count": 1
+      },
+      {
+        "phrase": "game-changer",
+        "count": 1
+      },
+      {
+        "phrase": "cutting-edge",
+        "count": 1
+      },
+      {
+        "phrase": "cutting edge",
+        "count": 1
+      },
+      {
+        "phrase": "state-of-the-art",
+        "count": 1
+      },
+      {
+        "phrase": "state of the art",
+        "count": 1
+      },
+      {
+        "phrase": "best practices",
+        "count": 1
+      },
+      {
+        "phrase": "deep dive",
+        "count": 1
+      },
+      {
+        "phrase": "deep-dive",
+        "count": 1
+      },
+      {
+        "phrase": "unpack",
+        "count": 2
+      },
+      {
+        "phrase": "let's unpack",
+        "count": 1
+      },
+      {
+        "phrase": "double down",
+        "count": 1
+      },
+      {
+        "phrase": "circle back",
+        "count": 1
+      },
+      {
+        "phrase": "move the needle",
+        "count": 1
+      },
+      {
+        "phrase": "low-hanging fruit",
+        "count": 1
+      }
+    ],
+    "emojis_removed": 5,
+    "em_dashes_removed": 2,
+    "new_length": 5406,
+    "chars_removed": 1236
+  },
+  {
+    "file": "tests/test_asn_middleware.py",
+    "original_length": 5543,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 4324,
+    "chars_removed": 1219
+  },
+  {
+    "file": "tests/test_registry.py",
+    "original_length": 2026,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1613,
+    "chars_removed": 413
+  },
+  {
+    "file": "tests/conftest.py",
+    "original_length": 2919,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 2442,
+    "chars_removed": 477
+  },
+  {
+    "file": "tests/test_middleware.py",
+    "original_length": 4006,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 3227,
+    "chars_removed": 779
+  },
+  {
+    "file": "tests/test_dispatcher.py",
+    "original_length": 2271,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1940,
+    "chars_removed": 331
+  },
+  {
+    "file": "examples/asn_processor.py",
+    "original_length": 6232,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 4367,
+    "chars_removed": 1865
+  },
+  {
+    "file": "src/shim/server.py",
+    "original_length": 5753,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 4738,
+    "chars_removed": 1015
+  },
+  {
+    "file": "src/shim/handlers.py",
+    "original_length": 1891,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1540,
+    "chars_removed": 351
+  },
+  {
+    "file": "src/shim/cli.py",
+    "original_length": 7655,
+    "ai_phrases": [],
+    "emojis_removed": 9,
+    "em_dashes_removed": 0,
+    "new_length": 6202,
+    "chars_removed": 1453
+  },
+  {
+    "file": "src/shim/middleware/asn.py",
+    "original_length": 3792,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 3002,
+    "chars_removed": 790
+  },
+  {
+    "file": "src/shim/middleware/common.py",
+    "original_length": 1586,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1359,
+    "chars_removed": 227
+  },
+  {
+    "file": "src/shim/middleware/base.py",
+    "original_length": 1230,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1033,
+    "chars_removed": 197
+  },
+  {
+    "file": "src/shim/registry/service_registry.py",
+    "original_length": 1010,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 875,
+    "chars_removed": 135
+  },
+  {
+    "file": "src/shim/events/dispatcher.py",
+    "original_length": 1597,
+    "ai_phrases": [],
+    "emojis_removed": 0,
+    "em_dashes_removed": 0,
+    "new_length": 1418,
+    "chars_removed": 179
+  }
+]

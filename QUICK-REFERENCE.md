@@ -1,11 +1,11 @@
 # K8s Lambda Shim - Quick Reference
 
-## 🚀 Installation
+## Installation
 ```bash
 pip install -e .
 ```
 
-## 📋 Common Commands
+## Common Commands
 
 ### Setup
 ```bash
@@ -50,7 +50,7 @@ k8s-shim list-services -n default
 k8s-shim list-services -n freightverify
 ```
 
-## 🌐 API Endpoints
+## API Endpoints
 
 ```bash
 # Health check
@@ -61,49 +61,49 @@ curl http://localhost:8000/services
 
 # Invoke function
 curl -X POST http://localhost:8000/invoke/my-function \
-  -H "Content-Type: application/json" \
-  -d @event.json
+ -H "Content-Type: application/json" \
+ -d @event.json
 
 # SQS event
 curl -X POST http://localhost:8000/sqs/my-function \
-  -H "Content-Type: application/json" \
-  -d @sqs-event.json
+ -H "Content-Type: application/json" \
+ -d @sqs-event.json
 
 # EventBridge event
 curl -X POST http://localhost:8000/eventbridge/my-function \
-  -H "Content-Type: application/json" \
-  -d @eventbridge-event.json
+ -H "Content-Type: application/json" \
+ -d @eventbridge-event.json
 
 # API Gateway event
 curl -X POST http://localhost:8000/api-gateway/my-function \
-  -H "Content-Type: application/json" \
-  -d @api-gateway-event.json
+ -H "Content-Type: application/json" \
+ -d @api-gateway-event.json
 ```
 
-## 📝 Config Template
+## Config Template
 
 ```yaml
 services:
-  - name: my-function
-    namespace: default
-    service_name: my-service
-    port: 8080
-    path: /invoke
+ - name: my-function
+ namespace: default
+ service_name: my-service
+ port: 8080
+ path: /invoke
 
 middleware:
-  logging:
-    enabled: true
-    level: INFO
-  validation:
-    enabled: true
+ logging:
+ enabled: true
+ level: INFO
+ validation:
+ enabled: true
 
 server:
-  host: 0.0.0.0
-  port: 8000
-  timeout: 30
+ host: 0.0.0.0
+ port: 8000
+ timeout: 30
 ```
 
-## 🐳 Docker
+## Docker
 
 ```bash
 # Build
@@ -111,16 +111,16 @@ docker build -t k8s-lambda-shim .
 
 # Run
 docker run -p 8000:8000 \
-  -v $(pwd)/config.yaml:/config/config.yaml \
-  k8s-lambda-shim
+ -v $(pwd)/config.yaml:/config/config.yaml \
+ k8s-lambda-shim
 
 # Custom command
 docker run -p 8000:8000 \
-  -v $(pwd)/config.yaml:/config/config.yaml \
-  k8s-lambda-shim validate -c /config/config.yaml
+ -v $(pwd)/config.yaml:/config/config.yaml \
+ k8s-lambda-shim validate -c /config/config.yaml
 ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ```bash
 # Check services
@@ -136,46 +136,46 @@ k8s-shim validate -c config.yaml
 k8s-shim list-services -n your-namespace
 ```
 
-## 🎯 Event Types
+## Event Types
 
 - `sqs` - SQS queue messages
 - `eventbridge` - EventBridge events
 - `api-gateway` - API Gateway requests
 - `direct` - Direct Lambda invocations
 
-## 📦 Event Payload Examples
+## Event Payload Examples
 
 ### SQS Event
 ```json
 {
-  "Records": [
-    {
-      "messageId": "msg-001",
-      "body": {
-        "data": "your data here"
-      }
-    }
-  ]
+ "Records": [
+ {
+ "messageId": "msg-001",
+ "body": {
+ "data": "your data here"
+ }
+ }
+ ]
 }
 ```
 
 ### EventBridge Event
 ```json
 {
-  "detail-type": "MyEvent",
-  "source": "my.application",
-  "detail": {
-    "data": "your data here"
-  }
+ "detail-type": "MyEvent",
+ "source": "my.application",
+ "detail": {
+ "data": "your data here"
+ }
 }
 ```
 
 ### API Gateway Event
 ```json
 {
-  "httpMethod": "POST",
-  "body": {
-    "data": "your data here"
-  }
+ "httpMethod": "POST",
+ "body": {
+ "data": "your data here"
+ }
 }
 ```

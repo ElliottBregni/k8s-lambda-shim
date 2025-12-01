@@ -10,17 +10,17 @@ The K8s Lambda Shim provides specialized middleware for processing Advanced Ship
 
 ```python
 {
-    "shipment_number": str,      # Unique shipment identifier
-    "carrier": str,               # Carrier name (FEDEX, UPS, etc.)
-    "ship_to_address": str,       # Destination address
-    "delivery_date": str,         # Expected delivery (ISO 8601)
-    "items": [                    # List of parts/items
-        {
-            "part_number": str,   # Part identifier
-            "quantity": int,      # Quantity shipped
-            "description": str    # Optional description
-        }
-    ]
+ "shipment_number": str, # Unique shipment identifier
+ "carrier": str, # Carrier name (FEDEX, UPS, etc.)
+ "ship_to_address": str, # Destination address
+ "delivery_date": str, # Expected delivery (ISO 8601)
+ "items": [ # List of parts/items
+ {
+ "part_number": str, # Part identifier
+ "quantity": int, # Quantity shipped
+ "description": str # Optional description
+ }
+ ]
 }
 ```
 
@@ -67,15 +67,15 @@ Adds metadata and tracking information.
 **Example Enriched Payload:**
 ```json
 {
-    "shipment_number": "SH-2025-001",
-    "carrier": "FEDEX",
-    "tracking_number": "TRK-SH-2025-001",
-    "metadata": {
-        "processed_at": "2025-11-27T00:00:00Z",
-        "source": "sqs",
-        "function_name": "asn-processor"
-    },
-    "items": [...]
+ "shipment_number": "SH-2025-001",
+ "carrier": "FEDEX",
+ "tracking_number": "TRK-SH-2025-001",
+ "metadata": {
+ "processed_at": "2025-11-27T00:00:00Z",
+ "source": "sqs",
+ "function_name": "asn-processor"
+ },
+ "items": [...]
 }
 ```
 
@@ -107,25 +107,25 @@ middleware = ASNBatchProcessingMiddleware(batch_size=50)
 **Configuration:**
 ```json
 {
-    "FunctionResponseTypes": ["ReportBatchItemFailures"],
-    "BatchSize": 10,
-    "MaximumBatchingWindowInSeconds": 5
+ "FunctionResponseTypes": ["ReportBatchItemFailures"],
+ "BatchSize": 10,
+ "MaximumBatchingWindowInSeconds": 5
 }
 ```
 
 **Event Structure:**
 ```python
 {
-    "Records": [
-        {
-            "messageId": "msg-001",
-            "body": {
-                "shipment_number": "SH-2025-001",
-                "carrier": "FEDEX",
-                ...
-            }
-        }
-    ]
+ "Records": [
+ {
+ "messageId": "msg-001",
+ "body": {
+ "shipment_number": "SH-2025-001",
+ "carrier": "FEDEX",
+ ...
+ }
+ }
+ ]
 }
 ```
 
@@ -140,11 +140,11 @@ X-API-Key: your-api-key
 **Payload:**
 ```json
 {
-    "shipment_number": "SH-2025-001",
-    "carrier": "FEDEX",
-    "ship_to_address": "123 Factory St",
-    "delivery_date": "2025-11-28",
-    "items": [...]
+ "shipment_number": "SH-2025-001",
+ "carrier": "FEDEX",
+ "ship_to_address": "123 Factory St",
+ "delivery_date": "2025-11-28",
+ "items": [...]
 }
 ```
 
@@ -153,12 +153,12 @@ X-API-Key: your-api-key
 **Event Pattern:**
 ```json
 {
-    "detail-type": ["Scheduled ASN Processing"],
-    "source": ["aws.scheduler"],
-    "detail": {
-        "shipment_number": "SH-2025-001",
-        ...
-    }
+ "detail-type": ["Scheduled ASN Processing"],
+ "source": ["aws.scheduler"],
+ "detail": {
+ "shipment_number": "SH-2025-001",
+ ...
+ }
 }
 ```
 
@@ -170,17 +170,17 @@ Map Lambda functions to K8s services:
 
 ```yaml
 services:
-  asn-processor:
-    namespace: freightverify
-    service_name: asn-processor-service
-    port: 8080
-    path: /process
-  
-  parts-validator:
-    namespace: freightverify
-    service_name: parts-validator-service
-    port: 8080
-    path: /validate
+ asn-processor:
+ namespace: freightverify
+ service_name: asn-processor-service
+ port: 8080
+ path: /process
+
+ parts-validator:
+ namespace: freightverify
+ service_name: parts-validator-service
+ port: 8080
+ path: /validate
 ```
 
 ### Expected Service Interface
@@ -189,15 +189,15 @@ K8s services should accept POST requests with:
 
 ```json
 {
-    "event": {
-        "shipment_number": "...",
-        "carrier": "...",
-        ...
-    },
-    "context": {
-        "timestamp": "...",
-        "request_id": "..."
-    }
+ "event": {
+ "shipment_number": "...",
+ "carrier": "...",
+ ...
+ },
+ "context": {
+ "timestamp": "...",
+ "request_id": "..."
+ }
 }
 ```
 
@@ -205,9 +205,9 @@ And return:
 
 ```json
 {
-    "status": "success",
-    "asn_id": "...",
-    "processed_items": 5
+ "status": "success",
+ "asn_id": "...",
+ "processed_items": 5
 }
 ```
 
@@ -218,35 +218,35 @@ from shim.events.dispatcher import EventDispatcher, Event, EventType
 from shim.registry.service_registry import ServiceRegistry, ServiceEndpoint
 from shim.middleware.base import MiddlewareChain
 from shim.middleware.asn import (
-    ASNValidationMiddleware,
-    ASNEnrichmentMiddleware,
-    ASNBatchProcessingMiddleware
+ ASNValidationMiddleware,
+ ASNEnrichmentMiddleware,
+ ASNBatchProcessingMiddleware
 )
 
 # Setup
 registry = ServiceRegistry()
 registry.register("asn-processor", ServiceEndpoint(
-    namespace="freightverify",
-    service_name="asn-processor-service",
-    port=8080,
-    path="/process"
+ namespace="freightverify",
+ service_name="asn-processor-service",
+ port=8080,
+ path="/process"
 ))
 
 dispatcher = EventDispatcher()
 dispatcher.register_handler(EventType.SQS, SQSHandler(registry))
 
 middleware = MiddlewareChain([
-    ASNValidationMiddleware(),
-    ASNEnrichmentMiddleware(),
-    ASNBatchProcessingMiddleware(batch_size=50),
+ ASNValidationMiddleware(),
+ ASNEnrichmentMiddleware(),
+ ASNBatchProcessingMiddleware(batch_size=50),
 ])
 
 # Process event
 async def process_asn(event):
-    async def final_handler(evt):
-        return await dispatcher.dispatch(evt)
-    
-    return await middleware.execute(event, final_handler)
+ async def final_handler(evt):
+ return await dispatcher.dispatch(evt)
+
+ return await middleware.execute(event, final_handler)
 ```
 
 ## Error Handling
@@ -256,8 +256,8 @@ async def process_asn(event):
 Return HTTP 400 with error details:
 ```json
 {
-    "error": "ValidationError",
-    "message": "Missing required ASN fields: {'carrier'}"
+ "error": "ValidationError",
+ "message": "Missing required ASN fields: {'carrier'}"
 }
 ```
 
@@ -266,9 +266,9 @@ Return HTTP 400 with error details:
 Return HTTP 500 and retry via SQS:
 ```json
 {
-    "batchItemFailures": [
-        {"itemIdentifier": "msg-001"}
-    ]
+ "batchItemFailures": [
+ {"itemIdentifier": "msg-001"}
+ ]
 }
 ```
 

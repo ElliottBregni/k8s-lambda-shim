@@ -8,11 +8,11 @@ Base event model for all event types.
 
 ```python
 class Event(BaseModel):
-    event_type: EventType
-    payload: dict[str, Any]
-    context: dict[str, Any] = Field(default_factory=dict)
-    source_arn: str | None = None
-    function_name: str
+ event_type: EventType
+ payload: dict[str, Any]
+ context: dict[str, Any] = Field(default_factory=dict)
+ source_arn: str | None = None
+ function_name: str
 ```
 
 **Fields:**
@@ -26,10 +26,10 @@ class Event(BaseModel):
 
 ```python
 class EventType(str, Enum):
-    API_GATEWAY = "api_gateway"
-    EVENTBRIDGE = "eventbridge"
-    SQS = "sqs"
-    DIRECT_INVOKE = "direct_invoke"
+ API_GATEWAY = "api_gateway"
+ EVENTBRIDGE = "eventbridge"
+ SQS = "sqs"
+ DIRECT_INVOKE = "direct_invoke"
 ```
 
 ## Event Dispatcher
@@ -38,10 +38,10 @@ class EventType(str, Enum):
 
 ```python
 class EventDispatcher:
-    def register_handler(self, event_type: EventType, handler: EventHandler)
-    async def dispatch(self, event: Event) -> dict[str, Any]
-    @staticmethod
-    def identify_event_type(raw_event: dict[str, Any]) -> EventType
+ def register_handler(self, event_type: EventType, handler: EventHandler)
+ async def dispatch(self, event: Event) -> dict[str, Any]
+ @staticmethod
+ def identify_event_type(raw_event: dict[str, Any]) -> EventType
 ```
 
 **Methods:**
@@ -62,7 +62,7 @@ result = await dispatcher.dispatch(event)
 
 **Returns:** Handler response
 
-**Raises:** 
+**Raises:**
 - `ValueError`: No handler registered for event type
 
 #### identify_event_type
@@ -78,13 +78,13 @@ event_type = EventDispatcher.identify_event_type(raw_event)
 
 ```python
 class ServiceEndpoint(BaseModel):
-    namespace: str = "default"
-    service_name: str
-    port: int = 80
-    path: str = "/"
-    
-    @property
-    def url(self) -> str
+ namespace: str = "default"
+ service_name: str
+ port: int = 80
+ path: str = "/"
+
+ @property
+ def url(self) -> str
 ```
 
 **Properties:**
@@ -94,9 +94,9 @@ class ServiceEndpoint(BaseModel):
 
 ```python
 class ServiceRegistry:
-    def register(self, function_name: str, endpoint: ServiceEndpoint)
-    def lookup(self, function_name: str) -> Optional[ServiceEndpoint]
-    def load_from_config(self, config: dict[str, dict])
+ def register(self, function_name: str, endpoint: ServiceEndpoint)
+ def lookup(self, function_name: str) -> Optional[ServiceEndpoint]
+ def load_from_config(self, config: dict[str, dict])
 ```
 
 **Methods:**
@@ -106,9 +106,9 @@ Register a service endpoint for a function name.
 
 ```python
 registry.register("my-function", ServiceEndpoint(
-    service_name="my-service",
-    namespace="prod",
-    port=8080
+ service_name="my-service",
+ namespace="prod",
+ port=8080
 ))
 ```
 
@@ -126,8 +126,8 @@ Load multiple service mappings from config dict.
 
 ```python
 registry.load_from_config({
-    "func1": {"service_name": "service1"},
-    "func2": {"service_name": "service2", "port": 9000}
+ "func1": {"service_name": "service1"},
+ "func2": {"service_name": "service2", "port": 9000}
 })
 ```
 
@@ -137,8 +137,8 @@ registry.load_from_config({
 
 ```python
 class Middleware(ABC):
-    @abstractmethod
-    async def process(self, event: Event, next_handler: HandlerFunc) -> ResponseType
+ @abstractmethod
+ async def process(self, event: Event, next_handler: HandlerFunc) -> ResponseType
 ```
 
 Base class for all middleware implementations.
@@ -147,9 +147,9 @@ Base class for all middleware implementations.
 
 ```python
 class MiddlewareChain:
-    def __init__(self, middlewares: list[Middleware] | None = None)
-    def add(self, middleware: Middleware)
-    async def execute(self, event: Event, final_handler: HandlerFunc) -> ResponseType
+ def __init__(self, middlewares: list[Middleware] | None = None)
+ def add(self, middleware: Middleware)
+ async def execute(self, event: Event, final_handler: HandlerFunc) -> ResponseType
 ```
 
 **Methods:**
@@ -190,7 +190,7 @@ Validates required event fields.
 
 ```python
 class AuthMiddleware(Middleware):
-    def __init__(self, api_keys: set[str] | None = None)
+ def __init__(self, api_keys: set[str] | None = None)
 ```
 
 Validates API keys from `event.context["api_key"]`.
@@ -222,7 +222,7 @@ Enriches ASN events with metadata and tracking numbers.
 
 ```python
 class ASNBatchProcessingMiddleware(Middleware):
-    def __init__(self, batch_size: int = 100)
+ def __init__(self, batch_size: int = 100)
 ```
 
 Processes SQS batches in configurable sub-batches.
@@ -233,8 +233,8 @@ Processes SQS batches in configurable sub-batches.
 
 ```python
 class K8sInvokeHandler:
-    def __init__(self, registry: ServiceRegistry)
-    async def handle(self, event: Event) -> dict[str, Any]
+ def __init__(self, registry: ServiceRegistry)
+ async def handle(self, event: Event) -> dict[str, Any]
 ```
 
 Base handler for invoking K8s services via HTTP POST.
@@ -290,14 +290,14 @@ HandlerFunc = Callable[[Event], Awaitable[ResponseType]]
 
 ```python
 try:
-    result = await dispatcher.dispatch(event)
+ result = await dispatcher.dispatch(event)
 except ValueError as e:
-    logger.error(f"Invalid event: {e}")
-    return {"statusCode": 400, "body": str(e)}
+ logger.error(f"Invalid event: {e}")
+ return {"statusCode": 400, "body": str(e)}
 except PermissionError as e:
-    logger.error(f"Auth failed: {e}")
-    return {"statusCode": 403, "body": "Forbidden"}
+ logger.error(f"Auth failed: {e}")
+ return {"statusCode": 403, "body": "Forbidden"}
 except Exception as e:
-    logger.error(f"Unexpected error: {e}")
-    return {"statusCode": 500, "body": "Internal Server Error"}
+ logger.error(f"Unexpected error: {e}")
+ return {"statusCode": 500, "body": "Internal Server Error"}
 ```
